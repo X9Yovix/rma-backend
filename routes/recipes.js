@@ -111,4 +111,77 @@ router.post(
   recipesController.createRecipe,
 );
 
+/**
+ * @swagger
+ * /recipes:
+ *   get:
+ *     summary: List of recipes using pagination
+ *     tags: [Recipes]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         description: The page number (default is 1)
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         description: The number of recipes to be returned per page (default is 5)
+ *         schema:
+ *           type: integer
+ *           example: 5
+ *     responses:
+ *       200:
+ *         description: A list of recipes with pagination details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 totalRecipes:
+ *                   type: integer
+ *                   example: 50
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 10
+ *                 currentPage:
+ *                   type: integer
+ *                   example: 1
+ *                 recipes:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       name:
+ *                         type: string
+ *                         example: recipe1
+ *                       description:
+ *                         type: string
+ *                         example: This is a recipe1
+ *                       ingredients:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                         example: ["ingredient1", "ingredient2"]
+ *                       instructions:
+ *                         type: string
+ *                         example: Cook the ingredients
+ *                       image:
+ *                         type: string
+ *                         example: /path/image.ext
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Internal server error
+ */
+router.get("/", recipesController.getRecipes);
+
 module.exports = router;

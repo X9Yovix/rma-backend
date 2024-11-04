@@ -26,6 +26,31 @@ const createRecipe = async (req, res) => {
   }
 };
 
+const getRecipes = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+
+    const skip = (page - 1) * limit;
+
+    const recipes = await recipesModel.find().skip(skip).limit(limit);
+    const totalRecipes = await recipesModel.countDocuments();
+
+    res.status(200).json({
+      totalRecipes,
+      totalPages: Math.ceil(totalRecipes / limit),
+      currentPage: page,
+      recipes,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   createRecipe,
+  getRecipes,
 };
