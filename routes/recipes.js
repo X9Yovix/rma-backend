@@ -21,11 +21,11 @@ const upload = require("../middlewares/image_storage");
  *               name:
  *                 type: string
  *                 description: Name of the recipe
- *                 example: recipe1
+ *                 example: "recipe1"
  *               description:
  *                 type: string
  *                 description: Description of the recipe
- *                 example: This is a recipe1
+ *                 example: "This is a recipe1"
  *               ingredients:
  *                 type: array
  *                 items:
@@ -35,7 +35,7 @@ const upload = require("../middlewares/image_storage");
  *               instructions:
  *                 type: string
  *                 description: Cooking instructions
- *                 example: Cook the ingredients
+ *                 example: "Cook the ingredients"
  *               image:
  *                 type: string
  *                 format: binary
@@ -59,16 +59,16 @@ const upload = require("../middlewares/image_storage");
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Recipe created successfully
+ *                   example: "Recipe created successfully"
  *                 recipe:
  *                   type: object
  *                   properties:
  *                     name:
  *                       type: string
- *                       example: recipe1
+ *                       example: "recipe1"
  *                     description:
  *                       type: string
- *                       example: This is a recipe1
+ *                       example: "This is a recipe1"
  *                     ingredients:
  *                       type: array
  *                       items:
@@ -76,10 +76,10 @@ const upload = require("../middlewares/image_storage");
  *                       example: ["ingredient1", "ingredient2"]
  *                     instructions:
  *                       type: string
- *                       example: Cook the ingredients
+ *                       example: "Cook the ingredients"
  *                     image:
  *                       type: string
- *                       example: /path/image.ext
+ *                       example: "/path/image.ext"
  *       409:
  *         description: Duplicate recipe name
  *         content:
@@ -89,10 +89,10 @@ const upload = require("../middlewares/image_storage");
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Duplicate recipe name
+ *                   example: "Duplicate recipe name"
  *                 message:
  *                   type: string
- *                   example: A recipe with the name "recipe1" already exists
+ *                   example: "A recipe with the name 'recipe1' already exists"
  *       500:
  *         description: Internal server error
  *         content:
@@ -102,7 +102,7 @@ const upload = require("../middlewares/image_storage");
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Internal server error
+ *                   example: "Internal server error"
  */
 router.post(
   "/",
@@ -156,10 +156,10 @@ router.post(
  *                     properties:
  *                       name:
  *                         type: string
- *                         example: recipe1
+ *                         example: "recipe1"
  *                       description:
  *                         type: string
- *                         example: This is a recipe1
+ *                         example: "This is a recipe1"
  *                       ingredients:
  *                         type: array
  *                         items:
@@ -170,7 +170,7 @@ router.post(
  *                         example: Cook the ingredients
  *                       image:
  *                         type: string
- *                         example: /path/image.ext
+ *                         example: "/path/image.ext"
  *       500:
  *         description: Internal server error
  *         content:
@@ -180,8 +180,88 @@ router.post(
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Internal server error
+ *                   example: "Internal server error"
  */
 router.get("/", recipesController.getRecipes);
+
+/**
+ * @swagger
+ * /recipes/{id}:
+ *   get:
+ *     summary: Get a specific recipe by ID
+ *     tags: [Recipes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the recipe
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Recipe retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: "1234567890abcdef"
+ *                 name:
+ *                   type: string
+ *                   example: "recipe1"
+ *                 description:
+ *                   type: string
+ *                   example: "This is a recipe1"
+ *                 ingredients:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["ingredient1", "ingredient2"]
+ *                 instructions:
+ *                   type: string
+ *                   example: "Cook the ingredients"
+ *                 image:
+ *                   type: string
+ *                   example: "/path/image.ext"
+ *       400:
+ *         description: Invalid recipe ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Invalid recipe ID"
+ *                 message:
+ *                   type: string
+ *                   example: "The provided ID '1234567890abcdefsfsdfdsfd' is not a valid ObjectId"
+ *       404:
+ *         description: Recipe not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Recipe not found"
+ *                 message:
+ *                   type: string
+ *                   example: "Recipe with ID 1234567890abcdef doesn't exist"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+router.get("/:id", recipesController.getRecipeById);
 
 module.exports = router;

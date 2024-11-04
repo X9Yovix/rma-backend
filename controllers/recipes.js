@@ -1,4 +1,5 @@
 const recipesModel = require("../models/recipes");
+const mongoose = require("mongoose");
 
 const createRecipe = async (req, res) => {
   try {
@@ -50,7 +51,34 @@ const getRecipes = async (req, res) => {
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const recipe = await recipesModel.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({
+        error: "Recipe not found",
+        message: `Recipe with ID ${req.params.id} doesn't exist`,
+      });
+    }
+
+    res.status(200).json(recipe);
+  } catch (error) {
+    if (error instanceof mongoose.CastError) {
+      return res.status(400).json({
+        error: "Invalid recipe ID",
+        message: `The provided ID "${req.params.id}" is not a valid ObjectId`,
+      });
+    }
+
+    console.error(error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
+  getRecipeById,
 };
