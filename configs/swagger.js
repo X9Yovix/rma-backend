@@ -5,7 +5,7 @@ const swaggerDefinition = {
   info: {
     title: "Recipe Management Application API",
     version: "1.0.0",
-    description: "",
+    description: 'API documentation',
   },
   servers: [
     {
@@ -16,7 +16,7 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  apis: ["./api/routes/*.js"],
+  apis: ["./routes/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

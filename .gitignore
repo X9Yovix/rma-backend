@@ -1,3 +1,8 @@
+# hide dependencies 
 node_modules/
 
+# hide sensitive data
 .env
+
+# hide uploads folder
+uploads/
