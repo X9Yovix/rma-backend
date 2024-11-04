@@ -1,0 +1,37 @@
+{
+  "name": "rma_backend",
+  "version": "1.0.0",
+  "description": "recipe management application api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon index.js",
+    "format:check": "npx prettier . --check",
+    "format:write": "npx prettier . --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/X9Yovix/rma-backend.git"
+  },
+  "keywords": [
+    "recipe"
+  ],
+  "author": "Karim Ouazzou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/X9Yovix/rma-backend/issues"
+  },
+  "homepage": "https://github.com/X9Yovix/rma-backend#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "mongoose": "^8.8.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "prettier": "3.3.3"
+  }
+}
