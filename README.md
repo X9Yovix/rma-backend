@@ -4,6 +4,10 @@ This repository contains the backend for the Recipe Application management syste
 
 ## Features
 
+- **RESTful API**
+- **User Authentication using JWT**
+- **CRUD Operations for Recipes**
+- **Search Functionality**: Search for recipes by name and ingredients.
 
 
 ## Used Packages
@@ -13,6 +17,12 @@ This repository contains the backend for the Recipe Application management syste
 - **Mongoose**: An ODM library for MongoDB.
 - **Joi**: A schema description language and data validator for JavaScript objects.
 - **Swagger**: A tool for documenting APIs.
+- **Multer**: A middleware for handling `multipart/form-data`, which is primarily used for uploading files.
+- **JWT (JsonWebToken)**: A library to sign, verify, and decode JWT for secure user authentication and authorization.
+- **BcryptJs**: A library for hashing, ensuring that sensitive user data is stored securely.
+- **Nodemon**: A utility that automatically restarts the server when file changes are detected.
+- **Prettier**: A code formatter that enforces a consistent style for your code.
+
 
 ## Getting Started
 
@@ -20,7 +30,7 @@ This repository contains the backend for the Recipe Application management syste
 
 - [Node.js](https://nodejs.org/) (v22 or higher)
 
-### Installation
+### Setup
 
 1. Clone the repository:
 
@@ -32,8 +42,16 @@ cd rma-backend
 
 2. Create the `.env` file:
 
+- In Linux 🐧:
+
 ```bash
 mv .env.dev .env
+```
+
+- In Windows 🪟:
+
+```bash
+ren .env.dev .env
 ```
 
 3. Database configuration:
@@ -41,9 +59,8 @@ mv .env.dev .env
 Update the `.env` file with your database credentials. By default, if you are using a local server for MongoDB, the following URL will be used:
 <b> mongodb://localhost:27017/rma </b>
 
-<hr/>
-Don't forget to create a database called `rma` with an initial collection named `recipes`.
-<hr/>
+> **_Note:_** Don't forget to create a database called `rma` with an initial collection named `recipes`.
+
 4. Install dependencies:
 
 ```bash
@@ -55,3 +72,14 @@ npm install
 ```bash
 npm run dev
 ```
+
+6. Documentation:
+
+Access the API documentation through the following link:
+ [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
+
+7. Token Management:
+
+- **Seed User**: Use the `/seed` endpoint to create a test user in the database.
+- **Sign In**: Use the `/login` endpoint to authenticate and retrieve tokens.
+- After seeding a user and logging in, you will receive an **access token** and a **refresh token**. Use the access token in the "Authorize" section of Swagger to consume the recipes endpoints.

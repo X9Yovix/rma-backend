@@ -7,10 +7,22 @@ const upload = require("../middlewares/image_storage");
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * /recipes:
  *   post:
  *     summary: Create a new recipe
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -94,6 +106,19 @@ const upload = require("../middlewares/image_storage");
  *                     __v:
  *                       type: integer
  *                       example: 0
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "Access Token is expired/required"
  *       409:
  *         description: Duplicate recipe name
  *         content:
@@ -132,6 +157,8 @@ router.post(
  *     summary: Retrieve a list of all recipes
  *     description: List of recipes using pagination
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: page
@@ -200,6 +227,19 @@ router.post(
  *                       __v:
  *                         type: integer
  *                         example: 0
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "Access Token is expired/required"
  *       500:
  *         description: Internal server error
  *         content:
@@ -219,6 +259,8 @@ router.get("/", recipesController.getRecipes);
  *   get:
  *     summary: Retrieve a specific recipe by ID
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -278,6 +320,19 @@ router.get("/", recipesController.getRecipes);
  *                 message:
  *                   type: string
  *                   example: "The provided ID '1234567890abcdefsfsdfdsfd' is not a valid ObjectId"
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "Access Token is expired/required"
  *       404:
  *         description: Recipe not found
  *         content:
@@ -310,6 +365,8 @@ router.get("/:id", recipesController.getRecipeById);
  *   put:
  *     summary: Update a specific recipe by ID
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -457,6 +514,19 @@ router.get("/:id", recipesController.getRecipeById);
  *                 message:
  *                   type: string
  *                   example: "The provided ID '1234567890abcdefsfsdfdsfd' is not a valid ObjectId"
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "Access Token is expired/required"
  *       404:
  *         description: Recipe not found
  *         content:
@@ -502,6 +572,8 @@ router.put("/:id", upload.single("image"), recipesController.updateRecipe);
  *   delete:
  *     summary: Delete a specific recipe by ID
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -533,6 +605,19 @@ router.put("/:id", upload.single("image"), recipesController.updateRecipe);
  *                 message:
  *                   type: string
  *                   example: "The provided ID '1234567890abcdefsfsdfdsfd' is not a valid ObjectId"
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "Access Token is expired/required"
  *       404:
  *         description: Recipe not found
  *         content:
@@ -565,6 +650,8 @@ router.delete("/:id", recipesController.deleteRecipe);
  *   get:
  *     summary: Search for recipes by name and ingredients
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: name
@@ -624,6 +711,19 @@ router.delete("/:id", recipesController.deleteRecipe);
  *                       __v:
  *                         type: integer
  *                         example: 0
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "Access Token is expired/required"
  *       404:
  *         description: No recipes found
  *         content:

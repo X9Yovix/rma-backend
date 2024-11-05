@@ -5,7 +5,9 @@ dontenv.config();
 const swaggerUI = require("swagger-ui-express");
 const swaggerSpec = require("./configs/swagger");
 const dbConnection = require("./configs/db");
+const usersRoute = require("./routes/users");
 const recipesRoute = require("./routes/recipes");
+const authorization = require("./middlewares/authorization");
 
 const app = express();
 
@@ -14,7 +16,8 @@ app.use(express.json());
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 const apiRouter = express.Router();
-apiRouter.use("/recipes", recipesRoute);
+apiRouter.use("/users", usersRoute);
+apiRouter.use("/recipes", authorization, recipesRoute);
 app.use("/api", apiRouter);
 
 const port = process.env.PORT || 3000;
