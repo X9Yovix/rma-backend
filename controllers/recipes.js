@@ -58,7 +58,7 @@ const getRecipeById = async (req, res) => {
     if (!recipe) {
       return res.status(404).json({
         error: "Recipe not found",
-        message: `Recipe with ID ${req.params.id} doesn't exist`,
+        message: `Recipe with ID "${req.params.id}" doesn't exist`,
       });
     }
 
@@ -87,7 +87,7 @@ const updateRecipe = async (req, res) => {
     if (!currentRecipe) {
       return res.status(404).json({
         error: "Recipe not found",
-        message: `Recipe with ID ${req.params.id} doesn't exist`,
+        message: `Recipe with ID "${req.params.id}" doesn't exist`,
       });
     }
 
@@ -99,17 +99,11 @@ const updateRecipe = async (req, res) => {
     }
 
     const hasChanges = Object.keys(data).some((key) => {
-      //console.log("data[key]: ", data[key]);
-      //console.log("currentRecipe[key]: ", currentRecipe[key]);
-
       if (Array.isArray(data[key]) && Array.isArray(currentRecipe[key])) {
         return !arraysEqual(data[key], currentRecipe[key]);
       }
-
       return currentRecipe[key] !== data[key];
     });
-
-    //console.log("hasChanges: ", hasChanges);
     if (!hasChanges) {
       return res.status(200).json({
         message: "No changes were made to the recipe",
@@ -167,9 +161,47 @@ const arraysEqual = (arr1, arr2) => {
   return true;
 };
 
+const deleteRecipe = async (req, res) => {
+  try {
+    const recipe = await recipesModel.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({
+        error: "Recipe not found",
+        message: `Recipe with ID "${req.params.id}" doesn't exist`,
+      });
+    }
+
+    await recipesModel.findByIdAndDelete(req.params.id);
+    if (recipe.image) {
+      fs.unlink(recipe.image, (e) => {
+        if (e) {
+          console.error("Error deleting image: ", e);
+        }
+      });
+    }
+
+    res.status(200).json({
+      message: "Recipe deleted successfully",
+    });
+  } catch (error) {
+    if (error instanceof mongoose.CastError) {
+      return res.status(400).json({
+        error: "Invalid recipe ID",
+        message: `The provided ID "${req.params.id}" is not a valid ObjectId`,
+      });
+    }
+
+    console.error(error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

@@ -435,4 +435,67 @@ router.get("/:id", recipesController.getRecipeById);
  */
 router.put("/:id", upload.single("image"), recipesController.updateRecipe);
 
+/**
+ * @swagger
+ * /recipes/{id}:
+ *   delete:
+ *     summary: Delete a specific recipe by ID
+ *     tags: [Recipes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the recipe to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Recipe deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Recipe deleted successfully"
+ *       400:
+ *         description: Invalid recipe ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Invalid recipe ID"
+ *                 message:
+ *                   type: string
+ *                   example: "The provided ID '1234567890abcdefsfsdfdsfd' is not a valid ObjectId"
+ *       404:
+ *         description: Recipe not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Recipe not found"
+ *                 message:
+ *                   type: string
+ *                   example: "Recipe with ID '1234567890abcdef' doesn't exist"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+router.delete("/:id", recipesController.deleteRecipe);
+
 module.exports = router;
