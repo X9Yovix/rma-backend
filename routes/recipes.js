@@ -115,7 +115,8 @@ router.post(
  * @swagger
  * /recipes:
  *   get:
- *     summary: List of recipes using pagination
+ *     summary: Retrieve a list of all recipes
+ *     description: List of recipes using pagination
  *     tags: [Recipes]
  *     parameters:
  *       - in: query
@@ -188,7 +189,7 @@ router.get("/", recipesController.getRecipes);
  * @swagger
  * /recipes/{id}:
  *   get:
- *     summary: Get a specific recipe by ID
+ *     summary: Retrieve a specific recipe by ID
  *     tags: [Recipes]
  *     parameters:
  *       - in: path
@@ -250,7 +251,7 @@ router.get("/", recipesController.getRecipes);
  *                   example: "Recipe not found"
  *                 message:
  *                   type: string
- *                   example: "Recipe with ID 1234567890abcdef doesn't exist"
+ *                   example: "Recipe with ID '1234567890abcdef' doesn't exist"
  *       500:
  *         description: Internal server error
  *         content:
@@ -263,5 +264,175 @@ router.get("/", recipesController.getRecipes);
  *                   example: "Internal server error"
  */
 router.get("/:id", recipesController.getRecipeById);
+
+/**
+ * @swagger
+ * /recipes/{id}:
+ *   put:
+ *     summary: Update a specific recipe by ID
+ *     tags: [Recipes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the recipe to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the recipe
+ *                 example: "Updated recipe1"
+ *               description:
+ *                 type: string
+ *                 description: Description of the recipe
+ *                 example: "Updated recipe1 description"
+ *               ingredients:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: List of ingredients
+ *                 example: ["updated ingredient1", "updated ingredient2"]
+ *               instructions:
+ *                 type: string
+ *                 description: Cooking instructions
+ *                 example: "Updated cooking instructions"
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: An updated image file for the recipe
+ *             required:
+ *               - name
+ *               - description
+ *               - ingredients
+ *               - instructions
+ *           encoding:
+ *             ingredients:
+ *               style: form
+ *               explode: true
+ *     responses:
+ *       200:
+ *         description: Recipe updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Recipe updated successfully"
+ *                 recipe:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "1234567890abcdef"
+ *                     name:
+ *                       type: string
+ *                       example: "Updated recipe1"
+ *                     description:
+ *                       type: string
+ *                       example: "Updated recipe1 description"
+ *                     ingredients:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["updated ingredient1", "updated ingredient2"]
+ *                     instructions:
+ *                       type: string
+ *                       example: "Updated cooking instructions"
+ *                     image:
+ *                       type: string
+ *                       example: "/path/new_image.ext"
+ *       204:
+ *         description: No changes were made to the recipe
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No changes were made to the recipe"
+ *                 recipe:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "1234567890abcdef"
+ *                     name:
+ *                       type: string
+ *                       example: "Updated recipe1"
+ *                     description:
+ *                       type: string
+ *                       example: "Updated recipe1 description"
+ *                     ingredients:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["updated ingredient1", "updated ingredient2"]
+ *                     instructions:
+ *                       type: string
+ *                       example: "Updated cooking instructions"
+ *                     image:
+ *                       type: string
+ *                       example: "/path/new_image.ext"
+ *       400:
+ *         description: Invalid recipe ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Invalid recipe ID"
+ *                 message:
+ *                   type: string
+ *                   example: "The provided ID '1234567890abcdefsfsdfdsfd' is not a valid ObjectId"
+ *       404:
+ *         description: Recipe not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Recipe not found"
+ *                 message:
+ *                   type: string
+ *                   example: "Recipe with ID '1234567890abcdef' doesn't exist"
+ *       409:
+ *         description: Duplicate recipe name
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Duplicate recipe name"
+ *                 message:
+ *                   type: string
+ *                   example: "A recipe with the name 'Updated recipe1' already exists"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+router.put("/:id", upload.single("image"), recipesController.updateRecipe);
 
 module.exports = router;
