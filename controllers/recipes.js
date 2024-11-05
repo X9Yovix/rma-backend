@@ -198,10 +198,46 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const searchRecipes = async (req, res) => {
+  try {
+    const { name, ingredients } = req.query;
+
+    const query = {};
+
+    if (name) {
+      query.name = { $regex: name, $options: "i" };
+    }
+
+    if (ingredients) {
+      const ingredientsArray = ingredients.split(",").map((ing) => ing.trim());
+      query.ingredients = { $all: ingredientsArray };
+    }
+
+    const recipes = await recipesModel.find(query);
+
+    if (recipes.length === 0) {
+      return res.status(404).json({
+        error: "No recipes found",
+        message: "No recipes found with the provided search criteria",
+      });
+    }
+
+    res.status(200).json({
+      recipes,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  searchRecipes,
 };

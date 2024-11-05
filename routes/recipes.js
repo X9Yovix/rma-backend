@@ -63,6 +63,9 @@ const upload = require("../middlewares/image_storage");
  *                 recipe:
  *                   type: object
  *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "1234567890abcdef"
  *                     name:
  *                       type: string
  *                       example: "recipe1"
@@ -80,6 +83,17 @@ const upload = require("../middlewares/image_storage");
  *                     image:
  *                       type: string
  *                       example: "/path/image.ext"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-01-01T00:00:00.000Z"
+ *                     updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-01-01T00:00:00.000Z"
+ *                     __v:
+ *                       type: integer
+ *                       example: 0
  *       409:
  *         description: Duplicate recipe name
  *         content:
@@ -155,6 +169,9 @@ router.post(
  *                   items:
  *                     type: object
  *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: "1234567890abcdef"
  *                       name:
  *                         type: string
  *                         example: "recipe1"
@@ -172,6 +189,17 @@ router.post(
  *                       image:
  *                         type: string
  *                         example: "/path/image.ext"
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2024-01-01T00:00:00.000Z"
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2024-01-01T00:00:00.000Z"
+ *                       __v:
+ *                         type: integer
+ *                         example: 0
  *       500:
  *         description: Internal server error
  *         content:
@@ -226,6 +254,17 @@ router.get("/", recipesController.getRecipes);
  *                 image:
  *                   type: string
  *                   example: "/path/image.ext"
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2024-01-01T00:00:00.000Z"
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2024-01-01T00:00:00.000Z"
+ *                 __v:
+ *                   type: integer
+ *                   example: 0
  *       400:
  *         description: Invalid recipe ID
  *         content:
@@ -350,6 +389,17 @@ router.get("/:id", recipesController.getRecipeById);
  *                     image:
  *                       type: string
  *                       example: "/path/new_image.ext"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-01-01T00:00:00.000Z"
+ *                     updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-01-01T00:00:00.000Z"
+ *                     __v:
+ *                       type: integer
+ *                       example: 0
  *       204:
  *         description: No changes were made to the recipe
  *         content:
@@ -383,6 +433,17 @@ router.get("/:id", recipesController.getRecipeById);
  *                     image:
  *                       type: string
  *                       example: "/path/new_image.ext"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-01-01T00:00:00.000Z"
+ *                     updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-01-01T00:00:00.000Z"
+ *                     __v:
+ *                       type: integer
+ *                       example: 0
  *       400:
  *         description: Invalid recipe ID
  *         content:
@@ -497,5 +558,96 @@ router.put("/:id", upload.single("image"), recipesController.updateRecipe);
  *                   example: "Internal server error"
  */
 router.delete("/:id", recipesController.deleteRecipe);
+
+/**
+ * @swagger
+ * /recipes/advanced/search:
+ *   get:
+ *     summary: Search for recipes by name and ingredients
+ *     tags: [Recipes]
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         required: false
+ *         description: Name of the recipe to search for
+ *         schema:
+ *           type: string
+ *         example: "rec"
+ *       - in: query
+ *         name: ingredients
+ *         required: false
+ *         description: Comma-separated list of ingredients to search for
+ *         schema:
+ *           type: string
+ *         example: "ingredient1, ingredient2"
+ *     responses:
+ *       200:
+ *         description: Recipes retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 recipes:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: "1234567890abcdef"
+ *                       name:
+ *                         type: string
+ *                         example: "recipe1"
+ *                       description:
+ *                         type: string
+ *                         example: "This is a recipe1"
+ *                       ingredients:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                         example: ["ingredient1", "ingredient2"]
+ *                       instructions:
+ *                         type: string
+ *                         example: "Cook the ingredients"
+ *                       image:
+ *                         type: string
+ *                         example: "/path/image.ext"
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2024-01-01T00:00:00.000Z"
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2024-01-01T00:00:00.000Z"
+ *                       __v:
+ *                         type: integer
+ *                         example: 0
+ *       404:
+ *         description: No recipes found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "No recipes found"
+ *                 message:
+ *                   type: string
+ *                   example: "No recipes found with the provided search criteria"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+router.get("/advanced/search", recipesController.searchRecipes);
 
 module.exports = router;
