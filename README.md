@@ -28,7 +28,11 @@ This repository contains the backend for the Recipe Application management syste
 
 ### Prerequisites
 
+- [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/) (v22 or higher)
+- [MongoDB](https://www.mongodb.com/try/download/community)
+- [MongoDB Compass](https://www.mongodb.com/try/download/compass)
+
 
 ### Setup
 
