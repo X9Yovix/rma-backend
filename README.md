@@ -20,6 +20,7 @@ This repository contains the backend for the Recipe Application management syste
 - **Multer**: A middleware for handling `multipart/form-data`, which is primarily used for uploading files.
 - **JWT (JsonWebToken)**: A library to sign, verify, and decode JWT for secure user authentication and authorization.
 - **BcryptJs**: A library for hashing, ensuring that sensitive user data is stored securely.
+- **Cors**: A middleware that lets a server allow or block requests from different domains.
 - **Nodemon**: A utility that automatically restarts the server when file changes are detected.
 - **Prettier**: A code formatter that enforces a consistent style for your code.
 

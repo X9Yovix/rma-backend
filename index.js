@@ -2,6 +2,8 @@ const express = require("express");
 const dontenv = require("dotenv");
 dontenv.config();
 
+const cors = require("cors");
+const getCorsOptions = require("./configs/cors"); 
 const swaggerUI = require("swagger-ui-express");
 const swaggerSpec = require("./configs/swagger");
 const dbConnection = require("./configs/db");
@@ -11,6 +13,7 @@ const authorization = require("./middlewares/authorization");
 
 const app = express();
 
+app.use(cors(getCorsOptions));
 app.use(express.json());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
