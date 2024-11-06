@@ -648,7 +648,7 @@ router.delete("/:id", recipesController.deleteRecipe);
  * @swagger
  * /recipes/advanced/search:
  *   get:
- *     summary: Search for recipes by name and ingredients
+ *     summary: Search for recipes by name and ingredients with pagination
  *     tags: [Recipes]
  *     security:
  *       - bearerAuth: []
@@ -667,6 +667,20 @@ router.delete("/:id", recipesController.deleteRecipe);
  *         schema:
  *           type: string
  *         example: "ingredient1, ingredient2"
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         description: The page number (default is 1)
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         description: The number of recipes to be returned per page (default is 5)
+ *         schema:
+ *           type: integer
+ *           example: 5
  *     responses:
  *       200:
  *         description: Recipes retrieved successfully
@@ -711,6 +725,15 @@ router.delete("/:id", recipesController.deleteRecipe);
  *                       __v:
  *                         type: integer
  *                         example: 0
+ *                 totalRecipes:
+ *                   type: integer
+ *                   example: 100
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 20
+ *                 currentPage:
+ *                   type: integer
+ *                   example: 1
  *       401:
  *         description: Unauthorized
  *         content:

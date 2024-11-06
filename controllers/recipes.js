@@ -205,6 +205,9 @@ const deleteRecipe = async (req, res) => {
 const searchRecipes = async (req, res) => {
   try {
     const { name, ingredients } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
 
     const query = {};
 
@@ -217,7 +220,13 @@ const searchRecipes = async (req, res) => {
       query.ingredients = { $all: ingredientsArray };
     }
 
-    const recipes = await recipesModel.find(query);
+    const recipes = await recipesModel
+      .find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const totalRecipes = await recipesModel.countDocuments(query);
 
     if (recipes.length === 0) {
       return res.status(404).json({
@@ -228,6 +237,9 @@ const searchRecipes = async (req, res) => {
 
     res.status(200).json({
       recipes,
+      totalRecipes,
+      totalPages: Math.ceil(totalRecipes / limit),
+      currentPage: page,
     });
   } catch (error) {
     console.error(error);
