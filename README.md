@@ -8,7 +8,8 @@ This repository contains the backend for the Recipe Application management syste
 - **User Authentication using JWT**
 - **CRUD Operations for Recipes**
 - **Search Functionality**: Search for recipes by name and ingredients.
-- accessible images through server
+- **Documentation**: API documentation is provided using Swagger for easy reference and testing.
+- **Accessible Images**: The server serves images associated with recipes, allowing users to upload and retrieve images via the API.
 
 
 ## Used Packages
