@@ -10,6 +10,8 @@ Both the frontend and backend applications are deployed and ready for use.
 - **Backend URL**: [https://rma-backend-2bgd.onrender.com](https://rma-backend-2bgd.onrender.com)
 - **Backend Documentation**: [https://rma-backend-2bgd.onrender.com/api-docs](https://rma-backend-2bgd.onrender.com/api-docs)
 
+> **Note**: The app is hosted on Render's free tier, which may spin down during periods of inactivity. As a result, the first request might take up to 50 seconds or more as the server starts up. To initiate the backend, try accessing the API documentation at [https://rma-backend-2bgd.onrender.com/api-docs/](https://rma-backend-2bgd.onrender.com/api-docs/) and wait for the server to respond. Once it’s up, you’ll be able to use the application normally.
+
 ### Default Credentials
 
 - **Email**: `test@test.com`
