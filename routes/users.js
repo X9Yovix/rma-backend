@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/users");
+const authorization = require("../middlewares/authorization");
 
 /**
  * @swagger
@@ -141,5 +142,9 @@ router.post("/login", userController.login);
  *                   example: "Internal server error"
  */
 router.post("/refresh", userController.refreshToken);
+
+router.get("/verify", authorization, (req, res) => {
+  res.status(200).send({ message: "Token is valid" });
+});
 
 module.exports = router;
