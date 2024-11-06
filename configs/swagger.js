@@ -10,6 +10,11 @@ const swaggerDefinition = {
   servers: [
     {
       url: "http://localhost:3000/api",
+      description: "Development server",
+    },
+    {
+      url: "https://rma-backend-2bgd.onrender.com/api",
+      description: "Production server",
     },
   ],
   tags: [

@@ -2,6 +2,27 @@
 
 This repository contains the backend for the Recipe Application management system built with Node.js.
 
+## Deployment
+
+Both the frontend and backend applications are deployed and ready for use.
+
+- **Frontend URL**: [https://rma-frontend-jtf5.onrender.com](https://rma-frontend-jtf5.onrender.com)
+- **Backend URL**: [https://rma-backend-2bgd.onrender.com](https://rma-backend-2bgd.onrender.com)
+- **Backend Documentation**: [https://rma-backend-2bgd.onrender.com/api-docs](https://rma-backend-2bgd.onrender.com/api-docs)
+
+### Default Credentials
+
+- **Email**: `test@test.com`
+- **Password**: `test@test.com`
+
+### User Creation
+
+If the user doesn't exist, you can create it by sending a `POST` request to the backend API. Use the following `curl` command to seed the user:
+
+```bash
+curl -X POST https://rma-backend-2bgd.onrender.com/api/users/seed
+```
+
 ## Features
 
 - **RESTful API**
@@ -10,7 +31,6 @@ This repository contains the backend for the Recipe Application management syste
 - **Search Functionality**: Search for recipes by name and ingredients.
 - **Documentation**: API documentation is provided using Swagger for easy reference and testing.
 - **Accessible Images**: The server serves images associated with recipes, allowing users to upload and retrieve images via the API.
-
 
 ## Used Packages
 
@@ -26,7 +46,6 @@ This repository contains the backend for the Recipe Application management syste
 - **Nodemon**: A utility that automatically restarts the server when file changes are detected.
 - **Prettier**: A code formatter that enforces a consistent style for your code.
 
-
 ## Getting Started
 
 ### Prerequisites
@@ -35,7 +54,6 @@ This repository contains the backend for the Recipe Application management syste
 - [Node.js](https://nodejs.org/) (v22 or higher)
 - [MongoDB](https://www.mongodb.com/try/download/community)
 - [MongoDB Compass](https://www.mongodb.com/try/download/compass)
-
 
 ### Setup
 
@@ -83,7 +101,7 @@ npm run dev
 6. Documentation:
 
 Access the API documentation through the following link:
- [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
+[http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
 
 7. Token Management:
 
