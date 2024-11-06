@@ -8,6 +8,7 @@ This repository contains the backend for the Recipe Application management syste
 - **User Authentication using JWT**
 - **CRUD Operations for Recipes**
 - **Search Functionality**: Search for recipes by name and ingredients.
+- accessible images through server
 
 
 ## Used Packages

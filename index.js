@@ -3,7 +3,7 @@ const dontenv = require("dotenv");
 dontenv.config();
 
 const cors = require("cors");
-const getCorsOptions = require("./configs/cors"); 
+const getCorsOptions = require("./configs/cors");
 const swaggerUI = require("swagger-ui-express");
 const swaggerSpec = require("./configs/swagger");
 const dbConnection = require("./configs/db");
@@ -22,6 +22,8 @@ const apiRouter = express.Router();
 apiRouter.use("/users", usersRoute);
 apiRouter.use("/recipes", authorization, recipesRoute);
 app.use("/api", apiRouter);
+
+app.use("/uploads", express.static("uploads"));
 
 const port = process.env.PORT || 3000;
 dbConnection()
