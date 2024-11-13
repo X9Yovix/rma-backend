@@ -217,7 +217,7 @@ const searchRecipes = async (req, res) => {
 
     if (ingredients) {
       const ingredientsArray = ingredients.split(",").map((ing) => ing.trim());
-      query.ingredients = { $all: ingredientsArray };
+      query.ingredients = { $in: ingredientsArray };
     }
 
     const recipes = await recipesModel
